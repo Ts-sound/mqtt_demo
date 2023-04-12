@@ -9,11 +9,15 @@ message("#####################################")
 
 project(${PROJECT_NAME})
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(MOSQUITTO REQUIRED libmosquitto)
+
 #####################################
 # include
 #####################################
 include_directories(/usr/include)
 include_directories(${PROJECT_SOURCE_DIR})
+include_directories(${MOSQUITTO_INCLUDE_DIRS})
 
 #####################################
 # package_inc
@@ -50,6 +54,7 @@ add_compile_options(-rdynamic)
 add_library(${PROJECT_NAME} SHARED ${PACKAGE_SRC})
 
 target_link_libraries(${PROJECT_NAME}
+${MOSQUITTO_LIBRARIES}
 -lboost_system
 -lboost_thread
 -pthread)

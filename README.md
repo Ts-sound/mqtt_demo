@@ -7,6 +7,7 @@ mqtt usage sample.
 
 sudo apt install mosquitto
 sudo apt install mosquitto-clients
+sudo apt install libmosquitto-dev
 
 ```
 
