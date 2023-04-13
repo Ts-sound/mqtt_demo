@@ -16,6 +16,7 @@ class MosquittoMQTT {
       return;
     }
     mosquitto_connect_callback_set(mosq, on_connect);
+    mosquitto_disconnect_callback_set(mosq, on_disconnect);
     mosquitto_message_callback_set(mosq, on_message);
   }
 
@@ -50,13 +51,22 @@ class MosquittoMQTT {
     return true;
   }
 
-  void loop() { mosquitto_loop(mosq, -1, 1); }
-
   void loop_forever() { mosquitto_loop_forever(mosq, -1, 1); }
+
+  void loop_start() { mosquitto_loop_start(mosq); }
+
+  void loop_stop() {
+    mosquitto_disconnect(mosq);
+    mosquitto_loop_stop(mosq, false);
+  }
 
  private:
   static void on_connect(struct mosquitto *mosq, void *userdata, int rc) {
     std::cout << "Connected to MQTT broker!" << std::endl;
+  }
+
+  static void on_disconnect(struct mosquitto *mosq, void *userdata, int rc) {
+    std::cout << "Disconnected to MQTT broker!" << std::endl;
   }
 
   static void on_message(struct mosquitto *mosq, void *userdata,

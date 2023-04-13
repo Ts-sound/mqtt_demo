@@ -14,6 +14,7 @@
     "set": "cpp",
     "sstream": "cpp",
     "tuple": "cpp",
-    "condition_variable": "cpp"
+    "condition_variable": "cpp",
+    "algorithm": "cpp"
   }
 }
